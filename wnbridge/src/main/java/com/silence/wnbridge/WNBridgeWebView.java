@@ -111,24 +111,16 @@ public abstract class WNBridgeWebView extends WebView {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                String promptParams = convertUrl2PromptParams(request.getUrl().toString());
-                if (!TextUtils.isEmpty(promptParams)) {
-                    WNBridge.handleJsBridge(jsInterface,promptParams);
+                if (dispatchInterceptUrl(request.getUrl().toString())) {
                     return true;
                 }
             }
             return super.shouldOverrideUrlLoading(view, request);
         }
 
-        /**
-         * 返回true时，代表拦截这次请求，我们自己处理
-         * 返回false时，代表不拦截这次请求，让WebView去处理这次请求
-         */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            String promptParams = convertUrl2PromptParams(url);
-            if (!TextUtils.isEmpty(promptParams)) {
-                WNBridge.handleJsBridge(jsInterface,promptParams);
+            if (dispatchInterceptUrl(url)) {
                 return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
@@ -137,9 +129,7 @@ public abstract class WNBridgeWebView extends WebView {
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                String promptParams = convertUrl2PromptParams(request.getUrl().toString());
-                if (!TextUtils.isEmpty(promptParams)) {
-                    WNBridge.handleJsBridge(jsInterface,promptParams);
+                if (dispatchInterceptUrl(request.getUrl().toString())) {
                     return null;
                 }
             }
@@ -148,16 +138,29 @@ public abstract class WNBridgeWebView extends WebView {
 
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            String promptParams = convertUrl2PromptParams(url);
-            if (!TextUtils.isEmpty(promptParams)) {
-                WNBridge.handleJsBridge(jsInterface,promptParams);
+            if (dispatchInterceptUrl(url)) {
                 return null;
             }
             return super.shouldInterceptRequest(view, url);
         }
 
+
         protected String convertUrl2PromptParams(String url) {
             return null;
+        }
+
+        /**
+         * 拦截处理相应的请求
+         * @param url 请求协议
+         * @return true 处理，false 未处理
+         */
+        private boolean dispatchInterceptUrl(String url){
+            String promptParams = convertUrl2PromptParams(url);
+            if (!TextUtils.isEmpty(promptParams)) {
+                WNBridge.handleJsBridge(jsInterface,promptParams);
+                return true;
+            }
+            return false;
         }
 
         protected String generatePromptParams(String method,String jsonParams,String callbackFunction,String transferParams){
