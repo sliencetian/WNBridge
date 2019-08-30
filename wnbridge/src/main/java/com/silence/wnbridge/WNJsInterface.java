@@ -7,7 +7,7 @@ import android.webkit.WebView;
 /**
  * Author silence.
  * Time：2019-08-27.
- * Desc：
+ * Desc：js 调用方法声明
  */
 public abstract class WNJsInterface {
 

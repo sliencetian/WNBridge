@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Author silence.
  * Time：2019-08-29.
- * Desc：
+ * Desc：封装 JS 请求协议
  */
 public class WNBridgeRequest implements Serializable {
 

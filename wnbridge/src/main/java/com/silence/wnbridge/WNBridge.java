@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 /**
  * Author silence.
  * Time：2019-08-29.
- * Desc：
+ * Desc：解析相关协议，回调相关 native 方法
  */
 class WNBridge {
 
@@ -30,6 +30,7 @@ class WNBridge {
                 public void run() {
                     String params;
                     try {
+                        //通过反射调用 WNJsInterface 相关方法
                         Method currMethod = jsInterface.getClass().getMethod(request.method, WNBridgeRequest.class);
                         Object result = currMethod.invoke(jsInterface, request);
                         if (result != null){

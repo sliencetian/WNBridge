@@ -18,7 +18,7 @@ import org.json.JSONObject;
 /**
  * Author silence.
  * Time：2019-08-29.
- * Desc：
+ * Desc：封装 桥接 WebView ，拦截相应的 js 调用
  */
 public abstract class WNBridgeWebView extends WebView {
 
