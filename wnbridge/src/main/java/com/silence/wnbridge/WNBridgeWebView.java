@@ -69,7 +69,9 @@ public abstract class WNBridgeWebView extends WebView {
         return null;
     }
 
-    public void onDestroy(){
+    @Override
+    public void destroy() {
+        super.destroy();
         if (webChromeClient != null) {
             webChromeClient.onDestroy();
         }

@@ -15,7 +15,7 @@ class WNBridge {
 
     private static Handler mainHandler = new Handler(Looper.getMainLooper());
 
-    private static void runOnUIThread(Runnable runnable){
+    static void runOnUIThread(Runnable runnable){
         mainHandler.post(runnable);
     }
 

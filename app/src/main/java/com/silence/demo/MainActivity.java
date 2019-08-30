@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        webView.onDestroy();
         super.onDestroy();
     }
 }
